@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác thực tài khoản - Webie Event</title>
+    <style>
+        body { margin: 0; padding: 0; min-width: 100%; width: 100% !important; height: 100% !important; background-color: #1a1a1a; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        table { border-collapse: collapse; }
+        img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        
+        .email-container { max-width: 600px; margin: 0 auto; background-color: #000000; border: 1px solid #333333; }
+        .top-bar { height: 4px; background: linear-gradient(90deg, #8e6d13 0%, #d4af37 50%, #8e6d13 100%); }
+        .content-box { padding: 48px 40px; }
+        
+        .title-h1 { color: #ffffff; font-size: 26px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin: 20px 0; }
+        .text-p { color: #aaaaaa; font-size: 16px; line-height: 1.6; margin-bottom: 24px; }
+        
+        .otp-wrapper {
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px dashed #d4af37;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 35px 0;
+            text-align: center;
+        }
+        .otp-label { color: #d4af37; font-size: 12px; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 15px; display: block; }
+        .otp-code {
+            color: #d4af37;
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: 12px;
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .footer { padding: 30px; background-color: #0a0a0a; text-align: center; border-top: 1px solid #222; }
+        .footer-text { color: #555555; font-size: 12px; line-height: 1.5; margin: 5px 0; }
+        .social-link { color: #d4af37; text-decoration: none; font-weight: bold; }
+        
+        @media only screen and (max-width: 480px) {
+            .content-box { padding: 30px 20px; }
+            .otp-code { font-size: 32px; letter-spacing: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#1a1a1a">
+        <tr>
+            <td align="center" style="padding: 40px 0;">
+                <table class="email-container" width="600" border="0" cellspacing="0" cellpadding="0">
+                    <tr><td class="top-bar"></td></tr>
+
+                    <tr>
+                        <td align="center" style="padding: 40px 40px 0 40px;">
+                            <img src="https://res.cloudinary.com/dozs7ggs4/image/upload/v1765964213/LOGO_WEBIE_ENENT-01_s6nfna.png" 
+                                 alt="Webie Event Logo" width="120" style="display: block;">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="content-box">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="center">
+                                        <h1 class="title-h1">Xác Thực Tài Khoản</h1>
+                                        <p class="text-p">
+                                            Chào <strong style="color: #ffffff;">{{username}}</strong>,<br>
+                                            Cảm ơn bạn đã lựa chọn <strong>Webie Event</strong>. Để hoàn tất quy trình đăng ký, vui lòng sử dụng mã xác thực dưới đây:
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="otp-wrapper">
+                                            <span class="otp-label">Mã OTP của bạn</span>
+                                            <div class="otp-code">{{otpCode}}</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <p class="text-p" style="font-size: 14px; font-style: italic;">
+                                            Mã này có hiệu lực trong <span style="color: #d4af37;">15 phút</span>.<br>
+                                            Vì lý do bảo mật, tuyệt đối không chia sẻ mã này cho bất kỳ ai.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="footer">
+                            <p class="footer-text">
+                                &copy; 2025 <strong>Webie Event Platform</strong>. All rights reserved.
+                            </p>
+                            <p class="footer-text">
+                                Bạn nhận được email này vì đã đăng ký tại <a href="#" class="social-link">webie-event.com</a>
+                            </p>
+                            <div style="margin-top: 15px; border-top: 1px solid #222; padding-top: 15px;">
+                                <p class="footer-text">Kết nối với chúng tôi qua Facebook | LinkedIn | Instagram</p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

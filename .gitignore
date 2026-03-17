@@ -1,0 +1,106 @@
+# Node.js
+node_modules/
+
+# Environment variables
+.env
+.env.*
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime
+pids/
+pidfiles/
+
+# Build
+build/
+dist/
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm/
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Coverage directory
+coverage/
+
+# Misc
+*.tgz
+*.swp
+*.swo
+
+# Prisma
+/prisma/
+/generated/prisma
+
+# VSCode
+.vscode/
+
+# Others
+.DS_Store
+Thumbs.db
+
+# Ignore test output
+/test-output/
+
+# Ignore temporary files
+*.tmp
+*.temp
+
+# Ignore error files
+*.err
+
+# Ignore package-lock
+package-lock.json
+
+# Ignore yarn lock
+yarn.lock
+
+# Ignore next.js build
+.next/
+
+# Ignore Svelte build
+.svelte/
+
+# Ignore TypeScript build
+*.tsbuildinfo
+
+# Ignore coverage
+coverage/
+
+# Ignore public
+public/
+
+# Ignore static
+static/
+
+# Ignore generated files
+/generated/
+
+# Ignore database
+*.sqlite
+*.db
+
+# Ignore uploads
+uploads/
+
+# Ignore secrets
+secrets/
+
+# Ignore docker
+Dockerfile
+docker-compose.yml
+
+# Ignore env sample
+.env.example
