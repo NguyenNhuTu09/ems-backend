@@ -6,7 +6,6 @@ const { createRefreshToken } = require("./refreshToken.service");
 const { sendVerificationEmail } = require("./email.service");
 
 // ─── Helper: format User thành UserResponseDTO ─────────────────────────────────
-// Tương đương new UserResponseDTO(...) trong Spring
 function toUserDTO(user) {
   return {
     uid: user.uid,
@@ -28,21 +27,17 @@ function generateOTP() {
 
 /**
  * Đăng ký người dùng mới
- * Tương đương registerNewUser() trong AuthService.java
  */
 async function registerNewUser({ username, email, password, confirmPassword }) {
-  // Kiểm tra confirm password (Joi đã validate, nhưng giữ lại để an toàn)
   if (password !== confirmPassword) {
     throw new Error("Mật khẩu và xác nhận mật khẩu không trùng khớp.");
   }
 
-  // Kiểm tra username đã tồn tại
   const existingUsername = await prisma.user.findUnique({ where: { username } });
   if (existingUsername) {
     throw new Error("Lỗi: Tên đăng nhập đã được sử dụng!");
   }
 
-  // Kiểm tra email đã tồn tại
   const existingEmail = await prisma.user.findUnique({ where: { email } });
   if (existingEmail) {
     throw new Error("Lỗi: Email đã được sử dụng!");
@@ -58,13 +53,12 @@ async function registerNewUser({ username, email, password, confirmPassword }) {
       password: hashedPassword,
       role: "USER",
       provider: "LOCAL",
-      isEnabled: false,       // Chưa kích hoạt — tương đương setEnabled(false)
+      isEnabled: false,
       uid: uuidv4(),
       verificationCode,
     },
   });
 
-  // Gửi email xác thực
   await sendVerificationEmail(newUser.email, newUser.username, verificationCode);
 
   return newUser;
@@ -72,15 +66,13 @@ async function registerNewUser({ username, email, password, confirmPassword }) {
 
 /**
  * Xác thực tài khoản qua OTP
- * Tương đương verifyUser() trong AuthService.java
  */
 async function verifyUser(email, inputCode) {
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user) throw new Error("Không tìm thấy người dùng với email này.");
 
-  if (user.isEnabled) return false; // Đã kích hoạt rồi
-
-  if (inputCode !== user.verificationCode) return false; // Mã sai
+  if (user.isEnabled) return false;
+  if (inputCode !== user.verificationCode) return false;
 
   await prisma.user.update({
     where: { email },
@@ -95,7 +87,6 @@ async function verifyUser(email, inputCode) {
 
 /**
  * Đăng nhập
- * Tương đương authenticateUser() trong AuthService.java
  */
 async function authenticateUser({ email, password }) {
   const user = await prisma.user.findUnique({ where: { email } });
@@ -116,7 +107,8 @@ async function authenticateUser({ email, password }) {
     throw new Error("Email hoặc mật khẩu không chính xác.");
   }
 
-  const accessToken = generateToken(user.email);
+  // ✅ Truyền role vào token để middleware đọc được
+  const accessToken = generateToken(user.email, user.role);
   const refreshToken = await createRefreshToken(user.email);
 
   return {
@@ -128,7 +120,6 @@ async function authenticateUser({ email, password }) {
 
 /**
  * Làm mới Access Token bằng Refresh Token
- * Tương đương refreshToken() trong AuthService.java
  */
 async function refreshAccessToken(requestRefreshToken) {
   const user = await prisma.user.findFirst({
@@ -140,7 +131,6 @@ async function refreshAccessToken(requestRefreshToken) {
   }
 
   if (!user.refreshTokenExpiryDate || user.refreshTokenExpiryDate < new Date()) {
-    // Xóa token hết hạn
     await prisma.user.update({
       where: { id: user.id },
       data: { refreshToken: null, refreshTokenExpiryDate: null },
@@ -148,7 +138,8 @@ async function refreshAccessToken(requestRefreshToken) {
     throw new Error("Refresh Token đã hết hạn. Vui lòng đăng nhập lại.");
   }
 
-  const newAccessToken = generateToken(user.email);
+  // ✅ Truyền role vào token mới
+  const newAccessToken = generateToken(user.email, user.role);
   const newRefreshToken = await createRefreshToken(user.email);
 
   return {
@@ -160,7 +151,6 @@ async function refreshAccessToken(requestRefreshToken) {
 
 /**
  * Đăng xuất — xóa refresh token
- * Tương đương logout() trong AuthService.java
  */
 async function logout(email) {
   const user = await prisma.user.findUnique({ where: { email } });
@@ -174,13 +164,11 @@ async function logout(email) {
 
 /**
  * Xử lý đăng nhập OAuth2 (Google)
- * Tương đương processOAuthPostLogin() trong AuthService.java
  */
 async function processOAuthPostLogin(email, name, avatarUrl) {
   const existingUser = await prisma.user.findUnique({ where: { email } });
 
   if (existingUser) {
-    // Cập nhật avatar và username nếu thiếu
     return prisma.user.update({
       where: { email },
       data: {
@@ -190,7 +178,6 @@ async function processOAuthPostLogin(email, name, avatarUrl) {
     });
   }
 
-  // Tạo user mới từ Google
   return prisma.user.create({
     data: {
       email,
@@ -200,17 +187,13 @@ async function processOAuthPostLogin(email, name, avatarUrl) {
       provider: "GOOGLE",
       isEnabled: true,
       uid: uuidv4(),
-      password: await hashPassword(uuidv4()), // Random password không dùng được
+      password: await hashPassword(uuidv4()),
     },
   });
 }
 
 /**
  * Đổi mã OTP một lần lấy JWT (sau OAuth2 redirect)
- * Tương đương exchangeCodeForJwt() trong AuthService.java
- *
- * @param {string} code  — one-time code
- * @param {Function} getEmailForCode  — từ oneTimeCodeService
  */
 async function exchangeCodeForJwt(code, getEmailForCode) {
   const email = getEmailForCode(code);
@@ -219,7 +202,8 @@ async function exchangeCodeForJwt(code, getEmailForCode) {
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user) throw new Error("Không tìm thấy người dùng với email: " + email);
 
-  const accessToken = generateToken(user.email);
+  // ✅ Truyền role vào token
+  const accessToken = generateToken(user.email, user.role);
   const refreshToken = await createRefreshToken(user.email);
 
   return {

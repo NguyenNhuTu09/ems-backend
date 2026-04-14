@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,6 +14,7 @@
   "description": "",
   "dependencies": {
     "@prisma/client": "^5.22.0",
+    "@scalar/express-api-reference": "^0.9.4",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
@@ -23,6 +24,7 @@
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "resend": "^6.9.3",
+    "slugify": "^1.6.8",
     "socket.io": "^4.8.3",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",

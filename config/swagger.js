@@ -1,5 +1,6 @@
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
+const { apiReference } = require("@scalar/express-api-reference");
 const path = require("path");
 
 const options = {
@@ -120,6 +121,11 @@ function setupSwagger(app) {
       },
     })
   );
+  app.use("/scalar", apiReference({
+    spec: {
+      content: swaggerSpec,
+    },
+  }));
 }
 
 module.exports = { setupSwagger };

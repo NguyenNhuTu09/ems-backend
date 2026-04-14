@@ -69,6 +69,21 @@ app.use("/api/auth", authRouter);
 const userRouter = require("./controllers/user.controller");
 app.use("/api/users", userRouter);
 
+const organizerRouter = require("./controllers/organizer.controller");
+app.use("/api/organizers", organizerRouter);
+
+const presenterRouter = require("./controllers/presenter.controller");
+app.use("/api/presenters", presenterRouter);
+
+const eventRouter = require("./controllers/event.controller");
+app.use("/api/events", eventRouter);
+
+const activityCategoryRouter = require("./controllers/activity-category.controller");
+app.use("/api/activity-categories", activityCategoryRouter);
+
+const activityRouter = require("./controllers/activity.controller");
+app.use("/api/activities", activityRouter);
+
 // ─── 9. 404 Handler ──────────────────────────────────────────────────────────
 app.use((req, res) => {
   res.status(404).json({ message: "Route không tồn tại" });
@@ -80,6 +95,11 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ message: err.message || "Internal Server Error" });
 });
 
+app.use((req, res, next) => {
+  console.log(`[${req.method}] ${req.path} | Origin: ${req.headers.origin}`);
+  next();
+});
+
 // ─── 11. Start Server ────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 8080;
 
@@ -89,7 +109,7 @@ async function bootstrap() {
     console.log("✅ Kết nối TiDB Cloud thành công");
     httpServer.listen(PORT, () => {
       console.log(`🚀 Server đang chạy tại http://localhost:${PORT}`);
-      console.log(`📄 Swagger UI: http://localhost:${PORT}/swagger-ui`);
+      console.log(`📄 Scalar UI: http://localhost:${PORT}/scalar`);
     });
   } catch (err) {
     console.error("❌ Không thể kết nối database:", err.message);

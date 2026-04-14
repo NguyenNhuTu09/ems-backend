@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Thông báo từ chối đăng ký - Webie Event</title>
+    <style>
+        body { margin: 0; padding: 0; background-color: #111111; font-family: Arial, sans-serif; }
+        .container { max-width: 600px; margin: 40px auto; background-color: #1a1a1a; border: 1px solid #333; border-radius: 8px; overflow: hidden; }
+        .header { background-color: #000000; padding: 30px; text-align: center; border-bottom: 2px solid #d4af37; }
+        .logo { max-width: 130px; }
+        .content { padding: 40px 30px; color: #e0e0e0; }
+        .reason-box { background-color: #3e1b1b; border: 1px solid #7f2828; color: #ffcccc; padding: 20px; border-radius: 4px; margin: 20px 0; }
+        .footer { background-color: #000; color: #555; text-align: center; padding: 20px; font-size: 11px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://res.cloudinary.com/dozs7ggs4/image/upload/v1765964213/LOGO_WEBIE_ENENT-01_s6nfna.png" alt="Webie Logo" class="logo">
+        </div>
+        <div class="content">
+            <p>Chào <strong>{{username}}</strong>,</p>
+            <p>Rất tiếc, yêu cầu đăng ký Organizer <strong>"{{organizerName}}"</strong> của bạn đã bị từ chối.</p>
+
+            <div class="reason-box">
+                <strong style="color: #ff6b6b; font-size: 12px; text-transform: uppercase;">Lý do từ chối:</strong><br>
+                <span style="font-size: 15px; display: block; margin-top: 5px;">{{reason}}</span>
+            </div>
+
+            <p style="font-size: 13px; color: #999;">
+                Bạn có thể cập nhật lại thông tin và gửi đăng ký mới, hoặc liên hệ bộ phận hỗ trợ nếu cần giải đáp thêm.
+            </p>
+        </div>
+        <div class="footer">&copy; 2025 Webie Event Management</div>
+    </div>
+</body>
+</html>

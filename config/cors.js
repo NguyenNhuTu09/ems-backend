@@ -12,7 +12,7 @@ const corsOptions = {
     "https://ems.webie.com.vn",
     "http://localhost:8080" 
   ],
-  methods:["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"], // Bổ sung PATCH nếu API có dùng
+  methods:["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"], 
   
   allowedHeaders:[
     "Content-Type", 

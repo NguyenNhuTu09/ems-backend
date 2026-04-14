@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Chúc mừng! Bạn đã là Organizer - Webie Event</title>
+    <style>
+        body { margin: 0; padding: 0; background-color: #111111; font-family: Arial, sans-serif; }
+        .container { max-width: 600px; margin: 40px auto; background-color: #1a1a1a; border: 1px solid #333; border-radius: 8px; overflow: hidden; box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); }
+        .header { background-color: #000000; padding: 30px; text-align: center; border-bottom: 2px solid #d4af37; }
+        .logo { max-width: 130px; }
+        .content { padding: 40px 30px; color: #e0e0e0; text-align: center; }
+        .btn-gold { display: inline-block; background-color: #d4af37; color: #000; padding: 12px 25px; text-decoration: none; font-weight: bold; border-radius: 4px; margin-top: 25px; }
+        .footer { background-color: #000; color: #555; text-align: center; padding: 20px; font-size: 11px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://res.cloudinary.com/dozs7ggs4/image/upload/v1765964213/LOGO_WEBIE_ENENT-01_s6nfna.png" alt="Webie Logo" class="logo">
+        </div>
+        <div class="content">
+            <h2 style="color: #d4af37; margin-top: 0;">CHÚC MỪNG!</h2>
+            <p>Chào <strong>{{username}}</strong>,</p>
+            <p>Yêu cầu đăng ký Organizer <strong>"{{organizerName}}"</strong> của bạn đã được chấp thuận.</p>
+            <p>Tài khoản của bạn đã được nâng cấp. Bây giờ bạn có thể tạo và quản lý các sự kiện chuyên nghiệp trên nền tảng Webie.</p>
+            <a href="{{dashboardUrl}}" class="btn-gold">Truy cập Dashboard Organizer</a>
+        </div>
+        <div class="footer">&copy; 2025 Webie Event Management</div>
+    </div>
+</body>
+</html>
